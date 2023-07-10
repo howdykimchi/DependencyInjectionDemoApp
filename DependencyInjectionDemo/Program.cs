@@ -9,7 +9,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 //builder.Services.AddTransient<DemoLogic>(); //new instance everytime
 //builder.Services.AddSingleton<DemoLogic>(); //singleton
-builder.Services.AddScoped<DemoLogic>(); //each instance have their singleton(localize), per connection(per user)
+//builder.Services.AddScoped<IDemoLogic, DemoLogic>(); //each instance have their singleton(localize), per connection(per user)
+//builder.Services.AddTransient<IDemoLogic, BetterDemoLogic>(); //with one change now change entire application
+builder.Services.AddTransient<IDemoLogic, DemoLogic>(); //how easy it is to change dependencies around
+
 
 var app = builder.Build();
 
