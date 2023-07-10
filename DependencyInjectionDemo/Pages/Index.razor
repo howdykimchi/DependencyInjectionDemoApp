@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using DependencyInjectionDemo.Logic
 @inject IDemoLogic logic
+@inject ILogger<Index> logger
 
 <PageTitle>Index</PageTitle>
 
@@ -19,5 +20,21 @@
 	protected override void OnInitialized()
 	{
 		//logic = new();
+
+		//do not use string interpolation when logging.(do not put the dollar sign first)
+		//dollar sign will force everything to be just a static string 
+		//which means won't have this additional information for structured logger.
+
+		//having the values in a separate colun makes it much easier to do querying on logs to get relevant information.
+		logger.LogInformation("Displaying values of {Value1} and {Value2}",
+			logic.Value1,
+			logic.Value2);
+
+		//why running twice - that's because of how blazer server works
+		//server actually renders on ther server and then it downloads the clent
+		// second time: to wire up things to be actually interactive
+		
+		//once to give the user something to see very quickly
+		//second time to behind the scenes wire things up and get things ready to go for interactivity
 	}
 }
